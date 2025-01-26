@@ -1,19 +1,4 @@
-<script>
-import { computed } from 'vue'
-import { useKasotiStore } from '@/stores/kasotiStore'
-import QuestionInput from '@/components/QuestionInput.vue'
-import QuestionList from '@/components/QuestionList.vue'
-import Results from '@/components/Results.vue'
-
-export default {
-  components: { QuestionInput, QuestionList, Results },
-  setup() {
-    const store = useKasotiStore()
-    const gameOver = computed(() => store.questionsLeft <= 0 || store.isCorrectGuess) // Access as a property
-    return { gameOver }
-  },
-}
-</script>
+<script setup></script>
 
 <template>
   <div class="container">
@@ -23,17 +8,15 @@ export default {
 
       <!-- Menu -->
       <div class="menu">
-        <button class="menu-btn">Home</button>
-        <button class="menu-btn">Instructions</button>
-        <button class="menu-btn">About</button>
+        <RouterLink to="/" class="menu-btn">Home</RouterLink>
+        <RouterLink to="/instructions" class="menu-btn">Instructions</RouterLink>
+        <RouterLink to="/about" class="menu-btn">About</RouterLink>
       </div>
     </header>
 
     <!-- Main Game Content -->
     <div class="game-content">
-      <QuestionInput v-if="!gameOver" />
-      <QuestionList v-if="!gameOver" />
-      <Results v-if="gameOver" />
+      <RouterView />
     </div>
   </div>
 </template>
@@ -85,6 +68,7 @@ header {
   font-weight: bold;
   color: white;
   background-color: #3498db;
+  text-decoration: none;
   border: none;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);

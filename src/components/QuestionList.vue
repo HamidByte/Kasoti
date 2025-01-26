@@ -1,20 +1,20 @@
 <template>
-    <div class="question-list-container" v-if="hasQuestions">
-      <h2 class="text-lg font-bold mb-2 text-center">Questions Asked:</h2>
-      <ul class="question-list">
-        <li v-for="(item, index) in questions" :key="index" class="question-item">
-          <div class="question">
-            <span class="question-number">Q{{ index + 1 }}:</span> 
-            <span class="question-text">{{ item.question }}</span>
-          </div>
-          <div class="answer">
-            <span class="answer-label">Answer:</span> 
-            <span class="answer-text">{{ item.answer }}</span>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </template>
+  <div class="question-list-container" v-if="hasQuestions">
+    <h2 class="text-lg font-bold mb-2 text-center">Questions Asked:</h2>
+    <ul class="question-list">
+      <li v-for="(item, index) in questions" :key="index" class="question-item">
+        <div class="question">
+          <span class="question-number">Q{{ index + 1 }}:</span>
+          <span class="question-text">{{ item.question }}</span>
+        </div>
+        <div class="answer">
+          <span class="answer-label">Answer:</span>
+          <span class="answer-text">{{ item.answer }}</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</template>
 
 <script>
 import { computed } from 'vue'
@@ -35,7 +35,7 @@ export default {
 <style scoped>
 /* Container styles */
 .question-list-container {
-  max-height: 60vh;  /* Ensures the container does not exceed the viewport height */
+  max-height: 60vh; /* Ensures the container does not exceed the viewport height */
   overflow: hidden; /* Ensures no browser scroll appears */
   display: flex;
   flex-direction: column;
