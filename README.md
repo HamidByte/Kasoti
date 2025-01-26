@@ -13,13 +13,13 @@ A Vue.js-based guessing game where players ask questions to guess a predefined w
 1. Clone the repository:
 
 ```sh
-git clone https://github.com/your-repo/kasoti-game.git
+git clone https://github.com/HamidByte/kasoti.git
 ```
 
 2. Navigate to the project directory:
 
 ```sh
-cd kasoti-game
+cd kasoti
 ```
 
 3. Install dependencies:
