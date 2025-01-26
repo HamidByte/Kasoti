@@ -1,40 +1,52 @@
-# kasoti
+# Kasoti Game
 
-This template should help get you started developing with Vue 3 in Vite.
+A Vue.js-based guessing game where players ask questions to guess a predefined word.
 
-## Recommended IDE Setup
+## Features
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- **Interactive gameplay:** Ask questions and receive YES/NO answers.
+- **Responsive UI:** Styled with a top-aligned logo, menu, and a clean layout.
+- **Game logic:** Tracks questions left and displays results when the game ends.
 
-## Customize configuration
+## Setup
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+1. Clone the repository:
 
-## Project Setup
+```sh
+git clone https://github.com/your-repo/kasoti-game.git
+```
+
+2. Navigate to the project directory:
+
+```sh
+cd kasoti-game
+```
+
+3. Install dependencies:
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+4. Start the development server:
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+5. Build for production:
 
 ```sh
 npm run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+6. Run unit tests:
 
 ```sh
 npm run test:unit
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+7. Lint and fix code:
 
 ```sh
 npm run lint

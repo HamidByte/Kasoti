@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${import.meta.env.VITE_API_KEY}`
+const API_URL = `${import.meta.env.VITE_GEMINI_2_FLASH_EXPERIMENTAL_URL}${import.meta.env.VITE_GEMINI_2_FLASH_EXPERIMENTAL_API_KEY}`
 
 export const sendQuestion = async (prompt) => {
   try {
