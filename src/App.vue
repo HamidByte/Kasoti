@@ -1,4 +1,10 @@
-<script setup></script>
+<script setup>
+import { useKasotiStore } from '@/stores/kasotiStore'
+import { computed } from 'vue'
+
+const store = useKasotiStore()
+const questionsLeft = computed(() => store.questionsLeft)
+</script>
 
 <template>
   <div class="container">
@@ -8,9 +14,18 @@
 
       <!-- Menu -->
       <div class="menu">
-        <RouterLink to="/" class="menu-btn">Home</RouterLink>
-        <RouterLink to="/instructions" class="menu-btn">Instructions</RouterLink>
-        <RouterLink to="/about" class="menu-btn">About</RouterLink>
+        <div class="menu-left">
+          <RouterLink to="/" class="menu-btn">Home</RouterLink>
+        </div>
+
+        <div class="menu-center">
+          <span class="menu-btn-2">Remaining Questions: {{ questionsLeft }}</span>
+        </div>
+
+        <div class="menu-right">
+          <RouterLink to="/instructions" class="menu-btn">Instructions</RouterLink>
+          <RouterLink to="/about" class="menu-btn">About</RouterLink>
+        </div>
       </div>
     </header>
 
@@ -59,7 +74,31 @@ header {
 .menu {
   display: flex;
   justify-content: center;
+  justify-content: space-between; /* Ensures the left, center, and right sections are spaced correctly */
   gap: 20px;
+  margin: 0 auto;
+  width: 75%;
+}
+
+.menu-left {
+  display: flex;
+  flex: 1; /* Pushes to the left */
+  justify-content: left;
+  gap: 20px; /* Space between buttons */
+}
+
+.menu-center {
+  display: flex;
+  flex: 1; /* Centers the menu items */
+  justify-content: center;
+  gap: 20px; /* Space between buttons */
+}
+
+.menu-right {
+  display: flex;
+  flex: 1; /* Pushes to the right */
+  justify-content: right;
+  gap: 20px; /* Space between buttons */
 }
 
 .menu-btn {
@@ -84,6 +123,30 @@ header {
 }
 
 .menu-btn:active {
+  transform: translateY(1px);
+}
+
+.menu-btn-2 {
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #33db71;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.menu-btn-2:hover {
+  background-color: #28b85d;
+  transform: translateY(-3px);
+}
+
+.menu-btn-2:active {
   transform: translateY(1px);
 }
 

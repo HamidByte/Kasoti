@@ -64,7 +64,7 @@ export default {
       }
     }
 
-    return { userQuestion, submitQuestion }
+    return { userQuestion, submitQuestion, isLoading }
   },
 }
 </script>
