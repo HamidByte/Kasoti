@@ -40,7 +40,9 @@ export default {
             question: userQuestion.value,
             answer: isCorrect ? "YES! You've guessed it!" : "NO! That's incorrect.",
           })
-          store.stopTimer() // Stop timer on final result
+          if (isCorrect) {
+            store.stopTimer() // Stop the timer if the guess is correct
+          }
           userQuestion.value = '' // Clear input
           return
         }
