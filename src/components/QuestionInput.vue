@@ -46,7 +46,7 @@ export default {
         }
 
         // Otherwise, send it to the API
-        const predefinedPrompt = `I am playing a guessing game. The word is ${selectedCelebrity.value}. Answer must be in binary form only either Yes or No. Format the answer in this style: "Yes/No".`
+        const predefinedPrompt = `I am playing a guessing game. The name is ${selectedCelebrity.value}. Answer must be in binary form only either Yes or No. Format the answer in this style: "Yes/No".`
         const apiResponse = await sendQuestion(`${predefinedPrompt}\n${userQuestion.value}`)
 
         const answer =
