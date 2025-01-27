@@ -32,14 +32,15 @@ export default {
       isLoading.value = true // Start loading
 
       try {
+        // Final guess
         if (store.questionsLeft === 1) {
-          // Final guess
           const isCorrect =
             userQuestion.value.trim().toLowerCase() === selectedCelebrity.value.toLowerCase()
           store.addQuestion({
             question: userQuestion.value,
             answer: isCorrect ? "YES! You've guessed it!" : "NO! That's incorrect.",
           })
+          store.stopTimer() // Stop timer on final result
           userQuestion.value = '' // Clear input
           return
         }

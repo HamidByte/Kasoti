@@ -4,6 +4,7 @@ import { computed } from 'vue'
 
 const store = useKasotiStore()
 const questionsLeft = computed(() => store.questionsLeft)
+const timeTaken = computed(() => store.getTimeTaken)
 </script>
 
 <template>
@@ -20,6 +21,7 @@ const questionsLeft = computed(() => store.questionsLeft)
 
         <div class="menu-center">
           <span class="menu-btn-2">Remaining Questions: {{ questionsLeft }}</span>
+          <span class="menu-btn-2">Timer: {{ timeTaken }}</span>
         </div>
 
         <div class="menu-right">

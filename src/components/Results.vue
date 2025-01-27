@@ -2,7 +2,7 @@
   <div class="results-wrapper mt-4 p-4 border rounded bg-gray-100">
     <h2 class="text-lg font-bold">Game Over!</h2>
     <p>Total Questions Asked: {{ totalQuestions }}</p>
-    <p>Time Taken: {{ timeTaken }} seconds</p>
+    <p>Time Taken: {{ formattedTime }}</p>
     <p v-if="correct">🎉 You guessed it correctly!</p>
     <p v-else>❌ Wrong guess. Better luck next time!</p>
     <button @click="restartGame" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">
@@ -20,13 +20,26 @@ export default {
     const store = useKasotiStore()
     const totalQuestions = computed(() => store.questions.length)
     const timeTaken = computed(() => store.getTimeTaken)
+    const hours = computed(() => parseInt(timeTaken.value.split(':')[0], 10))
+    const minutes = computed(() => parseInt(timeTaken.value.split(':')[1], 10))
+    const seconds = computed(() => parseInt(timeTaken.value.split(':')[2], 10))
     const correct = computed(() => store.isCorrectGuess)
+
+    const formattedTime = computed(() => {
+      if (hours.value > 0) {
+        return `${hours.value} hours, ${minutes.value} minutes and ${seconds.value} seconds`
+      } else if (minutes.value > 0) {
+        return `${minutes.value} minutes and ${seconds.value} seconds`
+      } else {
+        return `${seconds.value} seconds`
+      }
+    })
 
     const restartGame = () => {
       store.restartGame()
     }
 
-    return { totalQuestions, timeTaken, correct, restartGame }
+    return { totalQuestions, formattedTime, correct, restartGame }
   },
 }
 </script>
