@@ -4,14 +4,9 @@
   <div class="about">
     <h1 class="title">About</h1>
     <p class="description">
-      Kasoti Game is a fun and interactive guessing game designed to challenge your deductive
-      skills. The game encourages players to ask questions and use logic to identify a mystery word.
-      It’s perfect for family gatherings, team-building activities, or just a casual game with
-      friends.
-    </p>
-    <p class="description">
-      Built using the latest web technologies, Kasoti Game combines simplicity with an engaging
-      interface. We hope you enjoy playing as much as we enjoyed creating it!
+      Kasoti is a fun and interactive guessing game that challenges your skills. Players ask
+      questions to figure out a mystery word or name. Kasoti uses AI to answer the questions. We
+      hope you have as much fun playing it as we did creating it!
     </p>
   </div>
 </template>
