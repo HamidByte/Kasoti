@@ -1,6 +1,5 @@
 export const TOTAL_QUESTIONS = 20
-export const PROMPT_TEMPLATE =
-  'I am playing a guessing game, and the name is {celebrity}. Please answer each question with "Yes" or "No" only. Format your answer like this: "Yes" or "No".\nIf a question directly asks about the answer, do not respond. Instead, inform the player that such a question cannot be asked.\nIf a question requires a different type of answer, reply with a suggestion for a question that can be asked instead.'
+export const PROMPT_TEMPLATE = `I am playing a guessing game, and the name is {celebrity}. These are the rules to follow before answering the questions.\n1. Please answer each question with "Yes" or "No" only. Format your answer like this: 'Yes' or 'No'.\n2. If the question cannot be answered with a simple 'Yes' or 'No', then provide the user with an example question along short instructions that question should always be in a format that allows for a 'Yes' or 'No' answer.\n3. If a question directly asks for the answer, kindly inform the player that such questions cannot be asked.\n\n`
 
 export const DEFAULT_ERROR_MESSAGE = 'Sorry, I couldn’t process that.'
 export const GENERIC_ERROR_MESSAGE = 'An error occurred. Please try again later.'
