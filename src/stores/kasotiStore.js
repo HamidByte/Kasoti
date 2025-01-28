@@ -23,6 +23,15 @@ export const useKasotiStore = defineStore('kasoti', {
       const lastQuestion = state.questions[state.questions.length - 1]
       return lastQuestion?.question.toLowerCase().includes(state.celebrity.toLowerCase())
     },
+    gameOver() {
+      if (this.questionsLeft <= 0 || this.isCorrectGuess) {
+        // Stop the timer if all questions are asked or the guess is correct
+        this.stopTimer()
+        return true
+      } else {
+        return false
+      }
+    },
   },
   actions: {
     addQuestion(questionObj) {

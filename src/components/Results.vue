@@ -12,18 +12,20 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useKasotiStore } from '@/stores/kasotiStore'
+import { showFireworks } from '@/components/fireworks' // Import the function
 
 export default {
   setup() {
     const store = useKasotiStore()
+    const gameOver = computed(() => store.gameOver)
+    const correct = computed(() => store.isCorrectGuess)
     const totalQuestions = computed(() => store.questions.length)
     const timeTaken = computed(() => store.getTimeTaken)
     const hours = computed(() => parseInt(timeTaken.value.split(':')[0], 10))
     const minutes = computed(() => parseInt(timeTaken.value.split(':')[1], 10))
     const seconds = computed(() => parseInt(timeTaken.value.split(':')[2], 10))
-    const correct = computed(() => store.isCorrectGuess)
 
     const formattedTime = computed(() => {
       if (hours.value > 0) {
@@ -38,6 +40,10 @@ export default {
     const restartGame = () => {
       store.restartGame()
     }
+
+    onMounted(() => {
+      if (gameOver.value && correct.value) showFireworks()
+    })
 
     return { totalQuestions, formattedTime, correct, restartGame }
   },

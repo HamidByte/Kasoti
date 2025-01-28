@@ -9,7 +9,7 @@ export default {
   components: { QuestionInput, QuestionList, Results },
   setup() {
     const store = useKasotiStore()
-    const gameOver = computed(() => store.questionsLeft <= 0 || store.isCorrectGuess) // Access as a property
+    const gameOver = computed(() => store.gameOver)
     return { gameOver }
   },
 }
