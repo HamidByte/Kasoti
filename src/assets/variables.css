@@ -15,8 +15,8 @@
 
 /* Dark Theme */
 [data-theme='dark'] {
-  --color-bg: #121212;
-  --color-bg-2: #1e1e1e;
+  --color-bg: #141414;
+  --color-bg-2: #140f0f;
   --color-surface: #1e1e1e;
   --color-primary: #3498db;
   --color-primary-hover: #2980b9;

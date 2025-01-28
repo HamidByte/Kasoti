@@ -40,6 +40,7 @@ export default {
   display: flex;
   flex-direction: column;
   margin-top: 1rem;
+  color: var(--color-text-primary);
   /* background-color: var(--color-bg); */
   /* padding: 1rem; */
   /* border: 1px solid var(--color-border); */
@@ -95,7 +96,7 @@ export default {
   color: var(--color-primary);
 }
 
-.question-texxt {
+.question-text {
   color: var(--color-text-primary);
 }
 

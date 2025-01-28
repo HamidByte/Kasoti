@@ -54,6 +54,7 @@ export default {
 .results-wrapper {
   margin: 0 auto;
   text-align: center;
+  color: var(--color-text-primary);
 }
 
 button {

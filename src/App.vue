@@ -1,10 +1,19 @@
 <script setup>
 import { useKasotiStore } from '@/stores/kasotiStore'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import IconMoon from '@/components/icons/IconMoon.vue'
+import IconSun from '@/components/icons/IconSun.vue'
 
 const store = useKasotiStore()
+const darkMode = ref(false)
+const color = computed(() => (darkMode.value ? '#ffffff' : '#1e1e1e'))
 const questionsLeft = computed(() => store.questionsLeft)
 const timeTaken = computed(() => store.getTimeTaken)
+
+function toggleTheme() {
+  darkMode.value = !darkMode.value
+  document.documentElement.setAttribute('data-theme', darkMode.value ? 'dark' : 'light')
+}
 </script>
 
 <template>
@@ -17,6 +26,15 @@ const timeTaken = computed(() => store.getTimeTaken)
       <div class="menu">
         <div class="menu-left">
           <RouterLink to="/" class="menu-btn">Home</RouterLink>
+          <!-- Theme Toggle Button -->
+          <button class="toggle-btn" title="Toggle theme" @click="toggleTheme">
+            <template v-if="darkMode">
+              <IconSun :color="color" />
+            </template>
+            <template v-else>
+              <IconMoon :color="color" />
+            </template>
+          </button>
         </div>
 
         <div class="menu-center">
@@ -65,6 +83,31 @@ header {
 /* .logo:hover {
   transform: scale(1.1);
 } */
+
+[data-theme='dark'] .logo {
+  color: #dff1ff;
+}
+
+.toggle-btn {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--color-surface);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.toggle-btn:hover {
+  transform: translateY(-3px);
+}
+
+.toggle-btn:active {
+  transform: translateY(1px);
+}
 
 .menu {
   display: flex;
