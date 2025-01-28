@@ -21,7 +21,12 @@ export const useKasotiStore = defineStore('kasoti', {
     },
     isCorrectGuess: (state) => {
       const lastQuestion = state.questions[state.questions.length - 1]
-      return lastQuestion?.question.toLowerCase().includes(state.celebrity.toLowerCase())
+      if (!lastQuestion || !lastQuestion.question) return false // No questions to check yet
+
+      const normalizeString = (str) => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove accents
+      const userInput = normalizeString(lastQuestion?.question.trim().toLowerCase())
+      const celebrityName = normalizeString(state.celebrity.toLowerCase())
+      return userInput.includes(celebrityName)
     },
     gameOver() {
       if (this.questionsLeft <= 0 || this.isCorrectGuess) {

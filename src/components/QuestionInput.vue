@@ -35,11 +35,14 @@ export default {
       try {
         // Final guess
         if (store.questionsLeft === 1) {
-          const isCorrect =
-            userQuestion.value.trim().toLowerCase() === selectedCelebrity.value.toLowerCase()
+          const normalizeString = (str) => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove accents
+          const userInput = normalizeString(userQuestion.value.trim().toLowerCase())
+          const celebrityName = normalizeString(selectedCelebrity.value.toLowerCase())
+          const isCorrectGuess = userInput.includes(celebrityName)
+
           store.addQuestion({
             question: userQuestion.value,
-            answer: isCorrect
+            answer: isCorrectGuess
               ? DEFINITIONS.CORRECT_GUESS_MESSAGE
               : DEFINITIONS.INCORRECT_GUESS_MESSAGE,
           })

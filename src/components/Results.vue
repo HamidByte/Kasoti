@@ -3,7 +3,7 @@
     <h2 class="text-lg font-bold">Game Over!</h2>
     <p>Total Questions Asked: {{ totalQuestions }}</p>
     <p>Time Taken: {{ formattedTime }}</p>
-    <p v-if="correct">{{ DEFINITIONS.WIN_MESSAGE }}</p>
+    <p v-if="isCorrectGuess">{{ DEFINITIONS.WIN_MESSAGE }}</p>
     <p v-else>{{ DEFINITIONS.LOSS_MESSAGE }}</p>
     <button @click="restartGame" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">
       Restart Game
@@ -21,7 +21,7 @@ export default {
   setup() {
     const store = useKasotiStore()
     const gameOver = computed(() => store.gameOver)
-    const correct = computed(() => store.isCorrectGuess)
+    const isCorrectGuess = computed(() => store.isCorrectGuess)
     const totalQuestions = computed(() => store.questions.length)
     const timeTaken = computed(() => store.getTimeTaken)
     const hours = computed(() => parseInt(timeTaken.value.split(':')[0], 10))
@@ -43,10 +43,10 @@ export default {
     }
 
     onMounted(() => {
-      if (gameOver.value && correct.value) showFireworks()
+      if (gameOver.value && isCorrectGuess.value) showFireworks()
     })
 
-    return { totalQuestions, formattedTime, correct, restartGame, DEFINITIONS }
+    return { totalQuestions, formattedTime, isCorrectGuess, restartGame, DEFINITIONS }
   },
 }
 </script>
