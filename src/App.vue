@@ -38,33 +38,26 @@ const timeTaken = computed(() => store.getTimeTaken)
   </div>
 </template>
 
-<style>
-html,
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-}
-</style>
-
 <style scoped>
 .container {
   /* max-width: 800px; */
   height: 100vh;
   margin: 0 auto;
   text-align: center;
-  background-color: #f4f4f9;
+  background-color: var(--color-bg);
 }
 
 header {
-  padding: 20px;
-  margin-bottom: 1rem;
+  padding: 1rem 0;
+  margin: 0 auto;
 }
 
 .logo {
   font-size: 2.5rem;
   font-weight: bold;
   color: #2c3e50;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
+
   /* text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease; */
 }
@@ -79,7 +72,7 @@ header {
   justify-content: space-between; /* Ensures the left, center, and right sections are spaced correctly */
   gap: 20px;
   margin: 0 auto;
-  width: 75%;
+  width: 73%;
 }
 
 .menu-left {
@@ -107,8 +100,8 @@ header {
   padding: 10px 20px;
   font-size: 1.1rem;
   font-weight: bold;
-  color: white;
-  background-color: #3498db;
+  color: var(--color-surface);
+  background-color: var(--color-primary);
   text-decoration: none;
   border: none;
   border-radius: 5px;
@@ -120,7 +113,7 @@ header {
 }
 
 .menu-btn:hover {
-  background-color: #2980b9;
+  background-color: var(--color-primary-hover);
   transform: translateY(-3px);
 }
 
@@ -132,8 +125,8 @@ header {
   padding: 10px 20px;
   font-size: 1.1rem;
   font-weight: bold;
-  color: white;
-  background-color: #33db71;
+  color: var(--color-surface);
+  background-color: var(--color-secondary);
   border: none;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -144,7 +137,7 @@ header {
 }
 
 .menu-btn-2:hover {
-  background-color: #28b85d;
+  background-color: var(--color-secondary-hover);
   transform: translateY(-3px);
 }
 
@@ -156,7 +149,7 @@ header {
   margin: 0 auto;
   padding: 2rem;
   width: 70%;
-  background-color: #ffffff;
+  background-color: var(--color-surface);
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }

@@ -82,7 +82,7 @@ input {
   border-top: 0;
   border-left: 0;
   border-right: 0;
-  border-bottom: 2px solid #3498db;
+  border-bottom: 2px solid var(--color-primary);
   outline: none;
   /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: border-color 0.3s ease; */
@@ -92,15 +92,15 @@ input:focus {
   border-top: 0;
   border-left: 0;
   border-right: 0;
-  border-bottom: 2px solid #3498db;
+  border-bottom: 2px solid var(--color-primary);
 }
 
 button {
   padding: 10px 20px;
   font-size: 1.1rem;
   font-weight: bold;
-  color: white;
-  background-color: #3498db;
+  color: var(--color-surface);
+  background-color: var(--color-primary);
   border: none;
   border-radius: 5px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -111,7 +111,7 @@ button {
 }
 
 button:hover {
-  background-color: #2980b9;
+  background-color: var(--color-primary-hover);
   transform: translateY(-3px);
 }
 

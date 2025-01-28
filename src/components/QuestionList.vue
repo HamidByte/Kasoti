@@ -39,9 +39,10 @@ export default {
   overflow: hidden; /* Ensures no browser scroll appears */
   display: flex;
   flex-direction: column;
-  /* background-color: #f9f9f9; */
+  margin-top: 1rem;
+  /* background-color: var(--color-bg); */
   /* padding: 1rem; */
-  /* border: 1px solid #ddd; */
+  /* border: 1px solid var(--color-border); */
   /* border-radius: 5px; */
   /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
@@ -59,7 +60,7 @@ export default {
 }
 
 .question-list::-webkit-scrollbar-thumb {
-  background-color: #3498db;
+  background-color: var(--color-primary);
   border-radius: 4px;
 }
 
@@ -73,8 +74,8 @@ export default {
   flex-direction: column;
   gap: 0.5rem;
   padding: 1rem;
-  background: #f9f9f9;
-  border-bottom: 2px solid #ddd;
+  background: var(--color-bg-2);
+  border-bottom: 2px solid var(--color-border);
   /* border-radius: 5px; */
   /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
@@ -85,26 +86,30 @@ export default {
 
 /* Question and answer styles */
 .question {
-  font-weight: bold;
-  color: #333;
+  font-size: 0.9rem;
 }
 
 .question-number {
-  color: #3498db;
   margin-right: 0.5rem;
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.question-texxt {
+  color: var(--color-text-primary);
 }
 
 .answer {
   font-size: 0.9rem;
-  color: #555;
 }
 
 .answer-label {
+  margin-right: 0.5rem;
   font-weight: bold;
-  color: #2980b9;
+  color: var(--color-primary);
 }
 
 .answer-text {
-  color: #555;
+  color: var(--color-text-primary);
 }
 </style>

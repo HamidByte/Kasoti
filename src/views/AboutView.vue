@@ -27,13 +27,13 @@
   font-size: 2.5rem;
   font-weight: bold;
   text-align: center;
-  color: #2c3e50;
+  color: var(--color-text-primary);
   margin-bottom: 1.5rem;
 }
 
 .description {
   font-size: 1.2rem;
-  color: #374151;
+  color: var(--color-text-secondary);
   line-height: 1.6;
   margin-bottom: 1.2rem;
 }
