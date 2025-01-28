@@ -6,7 +6,6 @@ import IconSun from '@/components/icons/IconSun.vue'
 
 const store = useKasotiStore()
 const darkMode = ref(false)
-const color = computed(() => (darkMode.value ? '#ffffff' : '#1e1e1e'))
 const questionsLeft = computed(() => store.questionsLeft)
 const timeTaken = computed(() => store.getTimeTaken)
 
@@ -29,10 +28,10 @@ function toggleTheme() {
           <!-- Theme Toggle Button -->
           <button class="toggle-btn" title="Toggle theme" @click="toggleTheme">
             <template v-if="darkMode">
-              <IconSun :color="color" />
+              <IconSun :color="'var(--color-text-primary)'" />
             </template>
             <template v-else>
-              <IconMoon :color="color" />
+              <IconMoon :color="'var(--color-text-primary)'" />
             </template>
           </button>
         </div>
@@ -89,8 +88,8 @@ header {
 }
 
 .toggle-btn {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   padding: 0;
   font-size: 1.1rem;
   font-weight: bold;
