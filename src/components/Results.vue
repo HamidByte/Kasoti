@@ -3,8 +3,8 @@
     <h2 class="text-lg font-bold">Game Over!</h2>
     <p>Total Questions Asked: {{ totalQuestions }}</p>
     <p>Time Taken: {{ formattedTime }}</p>
-    <p v-if="correct">🎉 You guessed it correctly!</p>
-    <p v-else>❌ Wrong guess. Better luck next time!</p>
+    <p v-if="correct">{{ DEFINITIONS.WIN_MESSAGE }}</p>
+    <p v-else>{{ DEFINITIONS.LOSS_MESSAGE }}</p>
     <button @click="restartGame" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">
       Restart Game
     </button>
@@ -14,7 +14,8 @@
 <script>
 import { computed, onMounted } from 'vue'
 import { useKasotiStore } from '@/stores/kasotiStore'
-import { showFireworks } from '@/components/fireworks' // Import the function
+import { showFireworks } from '@/components/fireworks'
+import * as DEFINITIONS from '@/components/constants.js'
 
 export default {
   setup() {
@@ -45,7 +46,7 @@ export default {
       if (gameOver.value && correct.value) showFireworks()
     })
 
-    return { totalQuestions, formattedTime, correct, restartGame }
+    return { totalQuestions, formattedTime, correct, restartGame, DEFINITIONS }
   },
 }
 </script>

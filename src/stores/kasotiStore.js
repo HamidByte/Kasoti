@@ -37,9 +37,8 @@ export const useKasotiStore = defineStore('kasoti', {
     addQuestion(questionObj) {
       this.questions.push(questionObj)
       if (!this.startTime) this.startTimer() // Start timer on the first question
-      // Stop timer if the guess is correct
       if (this.isCorrectGuess) {
-        this.stopTimer()
+        this.stopTimer() // Stop timer if the guess is correct
       }
     },
     startTimer() {

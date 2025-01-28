@@ -18,6 +18,7 @@ import { ref } from 'vue'
 import { computed } from 'vue'
 import { useKasotiStore } from '@/stores/kasotiStore'
 import { sendQuestion } from '@/services/apiService'
+import * as DEFINITIONS from '@/components/constants.js'
 
 export default {
   setup() {
@@ -38,25 +39,30 @@ export default {
             userQuestion.value.trim().toLowerCase() === selectedCelebrity.value.toLowerCase()
           store.addQuestion({
             question: userQuestion.value,
-            answer: isCorrect ? "YES! You've guessed it!" : "NO! That's incorrect.",
+            answer: isCorrect
+              ? DEFINITIONS.CORRECT_GUESS_MESSAGE
+              : DEFINITIONS.INCORRECT_GUESS_MESSAGE,
           })
           userQuestion.value = '' // Clear input
           return
         }
 
         // Otherwise, send it to the API
-        const predefinedPrompt = `I am playing a guessing game. The name is ${selectedCelebrity.value}. Answer must be in binary form only either Yes or No. Format the answer in this style: "Yes/No".`
-        const apiResponse = await sendQuestion(`${predefinedPrompt}\n${userQuestion.value}`)
+        const promptTemplate = DEFINITIONS.PROMPT_TEMPLATE.replace(
+          '{celebrity}',
+          selectedCelebrity.value,
+        )
+        const apiResponse = await sendQuestion(`${promptTemplate}\n${userQuestion.value}`)
 
         const answer =
-          apiResponse?.candidates[0]?.content?.parts[0]?.text ?? 'Sorry, I couldn’t process that.'
+          apiResponse?.candidates[0]?.content?.parts[0]?.text ?? DEFINITIONS.DEFAULT_ERROR_MESSAGE
 
-        store.addQuestion({ question: userQuestion.value, answer })
+        store.addQuestion({ question: userQuestion.value, answer: answer.trim() })
       } catch (error) {
         console.error('Submission failed:', error) // Log the error for debugging
         store.addQuestion({
           question: userQuestion.value,
-          answer: 'An error occurred. Please try again later.',
+          answer: DEFINITIONS.GENERIC_ERROR_MESSAGE,
         })
       } finally {
         isLoading.value = false // Stop loading in all cases
