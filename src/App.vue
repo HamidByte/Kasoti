@@ -14,6 +14,8 @@ const selectedRegion = ref(REGIONS[0].value) // Default region
 const gameStarted = computed(() => store.gameStarted)
 const gameOver = computed(() => store.gameOver)
 
+// const selectedCelebrity = computed(() => store.selectedCelebrity)
+
 function toggleTheme() {
   darkMode.value = !darkMode.value
   document.documentElement.setAttribute('data-theme', darkMode.value ? 'dark' : 'light')

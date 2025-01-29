@@ -17,7 +17,7 @@
 import { ref } from 'vue'
 import { computed } from 'vue'
 import { useKasotiStore } from '@/stores/kasotiStore'
-import { sendQuestion } from '@/services/apiService'
+import { sendQuestion, verifyAnswer } from '@/services/apiService'
 import * as DEFINITIONS from '@/utils/constants.js'
 
 export default {
@@ -34,31 +34,42 @@ export default {
 
       try {
         // Final guess
-        if (store.questionsLeft === 1) {
-          const normalizeString = (str) => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove accents
-          const userInput = normalizeString(userQuestion.value.trim().toLowerCase())
-          const celebrityName = normalizeString(selectedCelebrity.value.toLowerCase())
-          const isCorrectGuess = userInput.includes(celebrityName)
+        // if (store.questionsLeft === 1) {
+        //   const normalizeString = (str) => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove accents
+        //   const userInput = normalizeString(userQuestion.value.trim().toLowerCase())
+        //   const celebrityName = normalizeString(selectedCelebrity.value.toLowerCase())
+        //   const isCorrectGuess = userInput.includes(celebrityName)
 
-          store.addQuestion({
-            question: userQuestion.value,
-            answer: isCorrectGuess
-              ? DEFINITIONS.CORRECT_GUESS_MESSAGE
-              : DEFINITIONS.INCORRECT_GUESS_MESSAGE,
-          })
-          userQuestion.value = '' // Clear input
-          return
-        }
+        //   store.addQuestion({
+        //     question: userQuestion.value,
+        //     answer: isCorrectGuess
+        //       ? DEFINITIONS.CORRECT_GUESS_MESSAGE
+        //       : DEFINITIONS.INCORRECT_GUESS_MESSAGE,
+        //   })
+        //   userQuestion.value = '' // Clear input
+        //   return
+        // }
 
-        // Otherwise, send it to the API
-        const promptTemplate = DEFINITIONS.PROMPT_TEMPLATE.replace(
+        // Verify the answer
+        const verificationPrompt = DEFINITIONS.VERIFICATION_PROMPT.replace(
+          '{celebrity}',
+          selectedCelebrity.value,
+        ).replace('{userInput}', userQuestion.value)
+        const verifiedResponse = await verifyAnswer(`${verificationPrompt}`)
+        const verifiedAnswer =
+          verifiedResponse?.candidates[0]?.content?.parts[0]?.text ??
+          DEFINITIONS.DEFAULT_ERROR_MESSAGE
+        store.verifyAnswer(verifiedAnswer.trim())
+
+        // Retrieve the general answers
+        const questionPrompt = DEFINITIONS.QUESTION_PROMPT.replace(
           '{celebrity}',
           selectedCelebrity.value,
         )
-        const apiResponse = await sendQuestion(`${promptTemplate}\n${userQuestion.value}`)
-
+        const questionResponse = await sendQuestion(`${questionPrompt}\n${userQuestion.value}`)
         const answer =
-          apiResponse?.candidates[0]?.content?.parts[0]?.text ?? DEFINITIONS.DEFAULT_ERROR_MESSAGE
+          questionResponse?.candidates[0]?.content?.parts[0]?.text ??
+          DEFINITIONS.DEFAULT_ERROR_MESSAGE
 
         store.addQuestion({ question: userQuestion.value, answer: answer.trim() })
       } catch (error) {

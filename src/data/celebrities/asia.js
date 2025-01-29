@@ -126,7 +126,7 @@ const asia = [
     gender: 'male',
   },
   {
-    name: 'Persian Emperor Darius I',
+    name: 'Darius I (Darius the Great)',
     profession: ['emperor'],
     dob: 'c. 550 BCE',
     born: 'Persis, Persia (now Iran)',

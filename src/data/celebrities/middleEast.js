@@ -63,7 +63,7 @@ const middleEast = [
     gender: 'male',
   },
   {
-    name: 'Queen Rania of Jordan',
+    name: 'Queen Rania of Jordan (Queen Rania)',
     profession: ['queen', 'humanitarian'],
     dob: 'August 31, 1970',
     born: 'Kuwait City, Kuwait',

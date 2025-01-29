@@ -9,6 +9,8 @@ import subcontinent from '@/data/celebrities/subcontinent.js'
 import africa from '@/data/celebrities/africa.js'
 import { REGIONS } from '@/utils/constants'
 
+// import test from '@/data/celebrities/test.js'
+
 export function getRandomCelebrityByRegion(region) {
   let celebrities
 

@@ -11,6 +11,7 @@ export const useKasotiStore = defineStore('kasoti', {
     timerInterval: null,
     elapsedTime: 0, // Store elapsed time in seconds
     gameStarted: false,
+    correctGuessStatus: false,
   }),
   getters: {
     selectedCelebrity: (state) => state.celebrity,
@@ -22,6 +23,8 @@ export const useKasotiStore = defineStore('kasoti', {
       return `${hours}:${minutes}:${seconds}` // HH:MM:SS
     },
     isCorrectGuess: (state) => {
+      if (state.correctGuessStatus) return true
+
       const lastQuestion = state.questions[state.questions.length - 1]
       if (!lastQuestion || !lastQuestion.question) return false // No questions to check yet
 
@@ -31,7 +34,7 @@ export const useKasotiStore = defineStore('kasoti', {
       return userInput.includes(celebrityName)
     },
     gameOver() {
-      if (this.questionsLeft <= 0 || this.isCorrectGuess) {
+      if (this.questionsLeft <= 0 || this.isCorrectGuess || this.correctGuessStatus) {
         // Stop the timer if all questions are asked or the guess is correct
         this.stopTimer()
         return true
@@ -44,6 +47,18 @@ export const useKasotiStore = defineStore('kasoti', {
     async setRegion(region) {
       this.selectedRegion = region
       this.celebrity = getRandomCelebrityByRegion(region)
+    },
+    verifyAnswer(answer) {
+      console.log('Answer:', answer)
+      if (!this.gameStarted) {
+        this.gameStarted = true
+        this.startTimer() // Start timer on the first question
+      }
+
+      if (answer === 'Yes') {
+        this.correctGuessStatus = true
+        this.stopTimer() // Stop timer if the guess is correct
+      }
     },
     addQuestion(questionObj) {
       if (!this.gameStarted) {
@@ -78,6 +93,7 @@ export const useKasotiStore = defineStore('kasoti', {
     },
     restartGame() {
       this.gameStarted = false
+      this.correctGuessStatus = false
       this.questions = []
       this.resetTimer()
       this.celebrity = getRandomCelebrityByRegion(this.selectedRegion)

@@ -111,7 +111,7 @@ const subcontinent = [
     gender: 'male',
   },
   {
-    name: 'Mahatma Gandhi',
+    name: 'Mahatma Gandhi (Mohandas Karamchand Gandhi)',
     profession: ['politician', 'activist'],
     dob: 'October 2, 1869',
     born: 'Porbandar, India',

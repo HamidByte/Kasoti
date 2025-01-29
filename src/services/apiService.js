@@ -13,3 +13,15 @@ export const sendQuestion = async (prompt) => {
     return null
   }
 }
+
+export const verifyAnswer = async (prompt) => {
+  try {
+    const response = await axios.post(API_URL, {
+      contents: [{ parts: [{ text: prompt }] }],
+    })
+    return response.data
+  } catch (error) {
+    console.error('API Error:', error)
+    return null
+  }
+}
