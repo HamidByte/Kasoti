@@ -18,7 +18,7 @@ import { ref } from 'vue'
 import { computed } from 'vue'
 import { useKasotiStore } from '@/stores/kasotiStore'
 import { sendQuestion } from '@/services/apiService'
-import * as DEFINITIONS from '@/components/constants.js'
+import * as DEFINITIONS from '@/utils/constants.js'
 
 export default {
   setup() {

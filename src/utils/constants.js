@@ -7,3 +7,15 @@ export const CORRECT_GUESS_MESSAGE = "YES! You've guessed it!"
 export const INCORRECT_GUESS_MESSAGE = "NO! That's incorrect."
 export const WIN_MESSAGE = '🎉 You guessed it correctly!'
 export const LOSS_MESSAGE = '❌ Wrong guess. Better luck next time!'
+
+export const REGIONS = [
+  { display: 'Worldwide', value: 'ww' },
+  { display: 'United States', value: 'us' },
+  { display: 'North America', value: 'na' },
+  { display: 'South America', value: 'sa' },
+  { display: 'Europe', value: 'eu' },
+  { display: 'Asia', value: 'as' },
+  { display: 'Middle East', value: 'me' },
+  { display: 'Subcontinent', value: 'sc' },
+  { display: 'Africa', value: 'af' },
+]

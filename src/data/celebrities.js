@@ -1,195 +1,24 @@
-const celebrities = [
-  {
-    name: 'Cristiano Ronaldo',
-    profession: ['footballer'],
-    dob: 'February 5, 1985',
-    born: 'Funchal, Madeira, Portugal',
-    gender: 'male',
-  },
-  {
-    name: 'Queen Elizabeth II',
-    profession: ['monarch'],
-    dob: 'April 21, 1926',
-    born: 'London, United Kingdom',
-    died: 'London, United Kingdom',
-    death: 'September 8, 2022',
-    gender: 'female',
-  },
-  {
-    name: 'Serena Williams',
-    profession: ['tennis player'],
-    dob: 'September 26, 1981',
-    born: 'Saginaw, Michigan, USA',
-    gender: 'female',
-  },
-  {
-    name: 'Albert Einstein',
-    profession: ['scientist'],
-    dob: 'March 14, 1879',
-    born: 'Ulm, Germany',
-    died: 'Princeton, New Jersey, USA',
-    death: 'April 18, 1955',
-    gender: 'male',
-  },
-  {
-    name: 'Emma Watson',
-    profession: ['actress', 'activist'],
-    dob: 'April 15, 1990',
-    born: 'Paris, France',
-    gender: 'female',
-  },
-  {
-    name: 'Lionel Messi',
-    profession: ['footballer'],
-    dob: 'June 24, 1987',
-    born: 'Rosario, Argentina',
-    gender: 'male',
-  },
-  {
-    name: 'Barack Obama',
-    profession: ['politician'],
-    dob: 'August 4, 1961',
-    born: 'Honolulu, Hawaii, USA',
-    gender: 'male',
-  },
-  {
-    name: 'Michael Jackson',
-    profession: ['musician', 'dancer'],
-    dob: 'August 29, 1958',
-    born: 'Gary, Indiana, USA',
-    died: 'Los Angeles, California, USA',
-    death: 'June 25, 2009',
-    gender: 'male',
-  },
-  {
-    name: 'Oprah Winfrey',
-    profession: ['television host', 'media proprietor'],
-    dob: 'January 29, 1954',
-    born: 'Kosciusko, Mississippi, USA',
-    gender: 'female',
-  },
-  {
-    name: 'Taylor Swift',
-    profession: ['musician', 'singer-songwriter'],
-    dob: 'December 13, 1989',
-    born: 'Reading, Pennsylvania, USA',
-    gender: 'female',
-  },
-  {
-    name: 'Muhammad Ali Jinnah',
-    profession: ['politician', 'lawyer'],
-    dob: 'December 25, 1876',
-    born: 'Karachi, Pakistan',
-    died: 'Karachi, Pakistan',
-    death: 'September 11, 1948',
-    gender: 'male',
-  },
-  {
-    name: 'Mahatma Gandhi',
-    profession: ['politician', 'activist'],
-    dob: 'October 2, 1869',
-    born: 'Porbandar, India',
-    died: 'New Delhi, India',
-    death: 'January 30, 1948',
-    gender: 'male',
-  },
-  {
-    name: 'Ariana Grande',
-    profession: ['musician', 'actress'],
-    dob: 'June 26, 1993',
-    born: 'Boca Raton, Florida, USA',
-    gender: 'female',
-  },
-  {
-    name: 'Nelson Mandela',
-    profession: ['politician', 'activist'],
-    dob: 'July 18, 1918',
-    born: 'Mvezo, South Africa',
-    died: 'Johannesburg, South Africa',
-    death: 'December 5, 2013',
-    gender: 'male',
-  },
-  {
-    name: 'Beyoncé',
-    profession: ['musician', 'actress'],
-    dob: 'September 4, 1981',
-    born: 'Houston, Texas, USA',
-    gender: 'female',
-  },
-  {
-    name: 'Usain Bolt',
-    profession: ['sprinter'],
-    dob: 'August 21, 1986',
-    born: 'Sherwood Content, Jamaica',
-    gender: 'male',
-  },
-  {
-    name: 'Albert Schweitzer',
-    profession: ['theologian', 'philosopher', 'doctor'],
-    dob: 'January 14, 1875',
-    born: 'Kaysersberg, Germany (now France)',
-    died: 'Lambaréné, Gabon',
-    death: 'September 4, 1965',
-    gender: 'male',
-  },
-  {
-    name: 'J.K. Rowling',
-    profession: ['author'],
-    dob: 'July 31, 1965',
-    born: 'Yate, Gloucestershire, UK',
-    gender: 'female',
-  },
-  {
-    name: 'Elon Musk',
-    profession: ['entrepreneur', 'business magnate'],
-    dob: 'June 28, 1971',
-    born: 'Pretoria, South Africa',
-    gender: 'male',
-  },
-  {
-    name: 'Vin Diesel',
-    profession: ['actor', 'producer'],
-    dob: 'July 18, 1967',
-    born: 'New York City, New York, USA',
-    gender: 'male',
-  },
-  {
-    name: 'Shakira',
-    profession: ['musician', 'dancer'],
-    dob: 'February 2, 1977',
-    born: 'Barranquilla, Colombia',
-    gender: 'female',
-  },
-  {
-    name: 'Malala Yousafzai',
-    profession: ['activist', 'author'],
-    dob: 'July 12, 1997',
-    born: 'Mingora, Swat Valley, Pakistan',
-    gender: 'female',
-  },
-  {
-    name: 'Tom Hanks',
-    profession: ['actor', 'producer'],
-    dob: 'July 9, 1956',
-    born: 'Concord, California, USA',
-    gender: 'male',
-  },
-  {
-    name: 'Rihanna',
-    profession: ['musician', 'businesswoman'],
-    dob: 'February 20, 1988',
-    born: 'Saint Michael, Barbados',
-    gender: 'female',
-  },
-  {
-    name: 'William Shakespeare',
-    profession: ['playwright', 'poet'],
-    dob: 'April 23, 1564',
-    born: 'Stratford-upon-Avon, England',
-    died: 'Stratford-upon-Avon, England',
-    death: 'April 23, 1616',
-    gender: 'male',
-  },
+import worldwide from './celebrities/worldwide.js'
+import unitedStates from './celebrities/unitedStates.js'
+import northAmerica from './celebrities/northAmerica.js'
+import southAmerica from './celebrities/southAmerica.js'
+import europe from './celebrities/europe.js'
+import asia from './celebrities/asia.js'
+import middleEast from './celebrities/middleEast.js'
+import subcontinent from './celebrities/subcontinent.js'
+import africa from './celebrities/africa.js'
+
+// Combine all the lists into one
+const allCelebrities = [
+  ...worldwide,
+  ...unitedStates,
+  ...northAmerica,
+  ...southAmerica,
+  ...europe,
+  ...asia,
+  ...middleEast,
+  ...subcontinent,
+  ...africa,
 ]
 
-export default celebrities
+export default allCelebrities

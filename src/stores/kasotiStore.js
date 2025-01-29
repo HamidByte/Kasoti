@@ -1,14 +1,16 @@
 import { defineStore } from 'pinia'
-import celebrities from '@/data/celebrities'
-import { TOTAL_QUESTIONS } from '@/components/constants'
+import { TOTAL_QUESTIONS, REGIONS } from '@/utils/constants'
+import { getRandomCelebrityByRegion } from '@/utils/celebritySelector'
 
 export const useKasotiStore = defineStore('kasoti', {
   state: () => ({
+    selectedRegion: REGIONS[0].value,
+    celebrity: getRandomCelebrityByRegion(REGIONS[0].value),
     questions: [],
     startTime: null, // Timer starts when the first question is asked
     timerInterval: null,
     elapsedTime: 0, // Store elapsed time in seconds
-    celebrity: celebrities[Math.floor(Math.random() * celebrities.length)].name, // Randomly select
+    gameStarted: false,
   }),
   getters: {
     selectedCelebrity: (state) => state.celebrity,
@@ -39,12 +41,21 @@ export const useKasotiStore = defineStore('kasoti', {
     },
   },
   actions: {
+    async setRegion(region) {
+      this.selectedRegion = region
+      this.celebrity = getRandomCelebrityByRegion(region)
+    },
     addQuestion(questionObj) {
-      this.questions.push(questionObj)
-      if (!this.startTime) this.startTimer() // Start timer on the first question
+      if (!this.gameStarted) {
+        this.gameStarted = true
+        this.startTimer() // Start timer on the first question
+      }
+
       if (this.isCorrectGuess) {
         this.stopTimer() // Stop timer if the guess is correct
       }
+
+      this.questions.push(questionObj)
     },
     startTimer() {
       if (!this.startTime) {
@@ -66,9 +77,10 @@ export const useKasotiStore = defineStore('kasoti', {
       this.elapsedTime = 0
     },
     restartGame() {
+      this.gameStarted = false
       this.questions = []
       this.resetTimer()
-      this.celebrity = celebrities[Math.floor(Math.random() * celebrities.length)].name
+      this.celebrity = getRandomCelebrityByRegion(this.selectedRegion)
     },
   },
 })

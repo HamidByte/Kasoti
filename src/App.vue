@@ -3,15 +3,24 @@ import { useKasotiStore } from '@/stores/kasotiStore'
 import { computed, ref } from 'vue'
 import IconMoon from '@/components/icons/IconMoon.vue'
 import IconSun from '@/components/icons/IconSun.vue'
+import { REGIONS } from '@/utils/constants'
 
 const store = useKasotiStore()
+
 const darkMode = ref(false)
 const questionsLeft = computed(() => store.questionsLeft)
 const timeTaken = computed(() => store.getTimeTaken)
+const selectedRegion = ref(REGIONS[0].value) // Default region
+const gameStarted = computed(() => store.gameStarted)
+const gameOver = computed(() => store.gameOver)
 
 function toggleTheme() {
   darkMode.value = !darkMode.value
   document.documentElement.setAttribute('data-theme', darkMode.value ? 'dark' : 'light')
+}
+
+function updateCelebrity() {
+  store.setRegion(selectedRegion.value)
 }
 </script>
 
@@ -50,6 +59,15 @@ function toggleTheme() {
 
     <!-- Main Game Content -->
     <div class="game-content">
+      <!-- Dropdown for Region Selection -->
+      <div v-if="!gameOver" class="region-selector">
+        <select v-model="selectedRegion" @change="updateCelebrity" :disabled="gameStarted">
+          <option v-for="region in REGIONS" :key="region.value" :value="region.value">
+            {{ region.display }}
+          </option>
+        </select>
+      </div>
+
       <RouterView />
     </div>
   </div>
@@ -185,6 +203,32 @@ header {
 
 .menu-btn-2:active {
   transform: translateY(1px);
+}
+
+.region-selector {
+  display: flex;
+  justify-content: center;
+}
+
+select {
+  padding: 10px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: 2px solid var(--color-primary);
+  border-radius: 5px;
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+select:hover {
+  border-color: var(--color-primary-hover);
+}
+
+select:focus {
+  outline: none;
+  box-shadow: 0 0 5px var(--color-primary);
 }
 
 .game-content {

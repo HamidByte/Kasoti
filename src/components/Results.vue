@@ -14,8 +14,8 @@
 <script>
 import { computed, onMounted } from 'vue'
 import { useKasotiStore } from '@/stores/kasotiStore'
-import { showFireworks } from '@/components/fireworks'
-import * as DEFINITIONS from '@/components/constants.js'
+import { showFireworks } from '@/utils/fireworks'
+import * as DEFINITIONS from '@/utils/constants.js'
 
 export default {
   setup() {
