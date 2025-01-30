@@ -58,6 +58,26 @@ export default {
   color: var(--color-text-primary);
 }
 
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+p {
+  font-size: 1.2rem;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+p:last-child {
+  margin-bottom: 1.5rem;
+}
+
 button {
   padding: 10px 20px;
   font-size: 1.1rem;
