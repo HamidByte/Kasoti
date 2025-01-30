@@ -49,7 +49,6 @@ export const useKasotiStore = defineStore('kasoti', {
       this.celebrity = getRandomCelebrityByRegion(region)
     },
     verifyAnswer(answer) {
-      console.log('Answer:', answer)
       if (!this.gameStarted) {
         this.gameStarted = true
         this.startTimer() // Start timer on the first question

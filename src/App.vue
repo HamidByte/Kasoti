@@ -1,10 +1,12 @@
 <script setup>
 import { useKasotiStore } from '@/stores/kasotiStore'
 import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import IconMoon from '@/components/icons/IconMoon.vue'
 import IconSun from '@/components/icons/IconSun.vue'
 import { REGIONS } from '@/utils/constants'
 
+const route = useRoute()
 const store = useKasotiStore()
 
 const darkMode = ref(false)
@@ -13,8 +15,6 @@ const timeTaken = computed(() => store.getTimeTaken)
 const selectedRegion = ref(REGIONS[0].value) // Default region
 const gameStarted = computed(() => store.gameStarted)
 const gameOver = computed(() => store.gameOver)
-
-// const selectedCelebrity = computed(() => store.selectedCelebrity)
 
 function toggleTheme() {
   darkMode.value = !darkMode.value
@@ -48,8 +48,12 @@ function updateCelebrity() {
         </div>
 
         <div class="menu-center">
-          <span class="menu-btn-2">Remaining Questions: {{ questionsLeft }}</span>
-          <span class="menu-btn-2">Timer: {{ timeTaken }}</span>
+          <!-- Dropdown for Region Selection -->
+          <select v-model="selectedRegion" @change="updateCelebrity" :disabled="gameStarted">
+            <option v-for="region in REGIONS" :key="region.value" :value="region.value">
+              {{ region.display }}
+            </option>
+          </select>
         </div>
 
         <div class="menu-right">
@@ -61,13 +65,9 @@ function updateCelebrity() {
 
     <!-- Main Game Content -->
     <div class="game-content">
-      <!-- Dropdown for Region Selection -->
-      <div v-if="!gameOver" class="region-selector">
-        <select v-model="selectedRegion" @change="updateCelebrity" :disabled="gameStarted">
-          <option v-for="region in REGIONS" :key="region.value" :value="region.value">
-            {{ region.display }}
-          </option>
-        </select>
+      <div class="game-status" v-if="!gameOver & (route.path === '/')">
+        <span class="status-btn">Remaining Questions: {{ questionsLeft }}</span>
+        <span class="status-btn">Timer: {{ timeTaken }}</span>
       </div>
 
       <RouterView />
@@ -183,35 +183,6 @@ header {
   transform: translateY(1px);
 }
 
-.menu-btn-2 {
-  padding: 10px 20px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: var(--color-surface);
-  background-color: var(--color-secondary);
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  transition:
-    background-color 0.3s ease,
-    transform 0.3s ease;
-}
-
-.menu-btn-2:hover {
-  background-color: var(--color-secondary-hover);
-  transform: translateY(-3px);
-}
-
-.menu-btn-2:active {
-  transform: translateY(1px);
-}
-
-.region-selector {
-  display: flex;
-  justify-content: center;
-}
-
 select {
   padding: 10px;
   font-size: 1.1rem;
@@ -231,6 +202,36 @@ select:hover {
 select:focus {
   outline: none;
   box-shadow: 0 0 5px var(--color-primary);
+}
+
+.game-status {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.status-btn {
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--color-surface);
+  background-color: var(--color-secondary);
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.status-btn:hover {
+  background-color: var(--color-secondary-hover);
+  transform: translateY(-3px);
+}
+
+.status-btn:active {
+  transform: translateY(1px);
 }
 
 .game-content {
