@@ -17,7 +17,7 @@
 import { ref } from 'vue'
 import { computed } from 'vue'
 import { useKasotiStore } from '@/stores/kasotiStore'
-import { sendQuestionApi, verifyAnswerApi } from '@/services/apiService'
+import { sendQuestionApi } from '@/services/apiService'
 import { verifyAnswer } from '@/utils/verifyAnswer'
 import * as DEFINITIONS from '@/utils/constants.js'
 
@@ -51,26 +51,17 @@ export default {
         // Verify the answer using custom logic
         store.checkQuestion(userQuestion.value.trim())
 
-        // // Verify the answer using the API
-        // const verificationPrompt = DEFINITIONS.VERIFICATION_PROMPT.replace(
-        //   '{celebrity}',
-        //   selectedCelebrity.value,
-        // ).replace('{userInput}', userQuestion.value)
-        // const verifiedResponse = await verifyAnswerApi(`${verificationPrompt}`)
-        // const verifiedAnswer =
-        //   verifiedResponse?.candidates[0]?.content?.parts[0]?.text ??
-        //   DEFINITIONS.DEFAULT_ERROR_MESSAGE
-        // store.checkAnswer(verifiedAnswer.trim())
-
         // Retrieve the general answers
         const questionPrompt = DEFINITIONS.QUESTION_PROMPT.replace(
           '{celebrity}',
           selectedCelebrity.value,
         )
-        const questionResponse = await sendQuestionApi(`${questionPrompt}\n${userQuestion.value}`)
+        const response = await sendQuestionApi(`${questionPrompt}\n${userQuestion.value}`)
         const answer =
-          questionResponse?.candidates[0]?.content?.parts[0]?.text ??
-          DEFINITIONS.DEFAULT_ERROR_MESSAGE
+          response?.candidates[0]?.content?.parts[0]?.text ?? DEFINITIONS.DEFAULT_ERROR_MESSAGE
+
+        // Verify the answer using the API
+        store.checkAnswer(answer.trim())
 
         store.addQuestion({ question: userQuestion.value, answer: answer.trim() })
       } catch (error) {

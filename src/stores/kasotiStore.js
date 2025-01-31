@@ -37,12 +37,12 @@ export const useKasotiStore = defineStore('kasoti', {
       this.selectedRegion = region
       this.celebrity = getRandomCelebrityByRegion(region)
     },
-    // checkAnswer(answer) {
-    //   if (answer === 'Yes') {
-    //     this.isCorrectGuess = true
-    //     this.stopTimer() // Stop timer if the guess is correct
-    //   }
-    // },
+    checkAnswer(answer) {
+      if (answer === 'Correct') {
+        this.isCorrectGuess = true
+        this.stopTimer() // Stop timer if the guess is correct
+      }
+    },
     checkQuestion(question) {
       if (!this.gameStarted) {
         this.gameStarted = true
