@@ -17,7 +17,8 @@
 import { ref } from 'vue'
 import { computed } from 'vue'
 import { useKasotiStore } from '@/stores/kasotiStore'
-import { sendQuestion, verifyAnswer } from '@/services/apiService'
+import { sendQuestionApi, verifyAnswerApi } from '@/services/apiService'
+import { verifyAnswer } from '@/utils/verifyAnswer'
 import * as DEFINITIONS from '@/utils/constants.js'
 
 export default {
@@ -35,10 +36,7 @@ export default {
       try {
         // Final guess
         // if (store.questionsLeft === 1) {
-        //   const normalizeString = (str) => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove accents
-        //   const userInput = normalizeString(userQuestion.value.trim().toLowerCase())
-        //   const celebrityName = normalizeString(selectedCelebrity.value.toLowerCase())
-        //   const isCorrectGuess = userInput.includes(celebrityName)
+        //   const isCorrectGuess = store.verifyAnswer(userQuestion.value.trim())
 
         //   store.addQuestion({
         //     question: userQuestion.value,
@@ -50,23 +48,26 @@ export default {
         //   return
         // }
 
-        // Verify the answer
-        const verificationPrompt = DEFINITIONS.VERIFICATION_PROMPT.replace(
-          '{celebrity}',
-          selectedCelebrity.value,
-        ).replace('{userInput}', userQuestion.value)
-        const verifiedResponse = await verifyAnswer(`${verificationPrompt}`)
-        const verifiedAnswer =
-          verifiedResponse?.candidates[0]?.content?.parts[0]?.text ??
-          DEFINITIONS.DEFAULT_ERROR_MESSAGE
-        store.verifyAnswer(verifiedAnswer.trim())
+        // Verify the answer using custom logic
+        store.checkQuestion(userQuestion.value.trim())
+
+        // // Verify the answer using the API
+        // const verificationPrompt = DEFINITIONS.VERIFICATION_PROMPT.replace(
+        //   '{celebrity}',
+        //   selectedCelebrity.value,
+        // ).replace('{userInput}', userQuestion.value)
+        // const verifiedResponse = await verifyAnswerApi(`${verificationPrompt}`)
+        // const verifiedAnswer =
+        //   verifiedResponse?.candidates[0]?.content?.parts[0]?.text ??
+        //   DEFINITIONS.DEFAULT_ERROR_MESSAGE
+        // store.checkAnswer(verifiedAnswer.trim())
 
         // Retrieve the general answers
         const questionPrompt = DEFINITIONS.QUESTION_PROMPT.replace(
           '{celebrity}',
           selectedCelebrity.value,
         )
-        const questionResponse = await sendQuestion(`${questionPrompt}\n${userQuestion.value}`)
+        const questionResponse = await sendQuestionApi(`${questionPrompt}\n${userQuestion.value}`)
         const answer =
           questionResponse?.candidates[0]?.content?.parts[0]?.text ??
           DEFINITIONS.DEFAULT_ERROR_MESSAGE

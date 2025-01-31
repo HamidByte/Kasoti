@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const API_URL = `${import.meta.env.VITE_GEMINI_2_FLASH_EXPERIMENTAL_URL}${import.meta.env.VITE_GEMINI_2_FLASH_EXPERIMENTAL_API_KEY}`
 
-export const sendQuestion = async (prompt) => {
+export const sendQuestionApi = async (prompt) => {
   try {
     const response = await axios.post(API_URL, {
       contents: [{ parts: [{ text: prompt }] }],
@@ -14,7 +14,7 @@ export const sendQuestion = async (prompt) => {
   }
 }
 
-export const verifyAnswer = async (prompt) => {
+export const verifyAnswerApi = async (prompt) => {
   try {
     const response = await axios.post(API_URL, {
       contents: [{ parts: [{ text: prompt }] }],
