@@ -4,9 +4,10 @@
   <div class="about">
     <h1 class="title">About</h1>
     <p class="description">
-      Kasoti is a fun and interactive guessing game that challenges your skills. Players ask
-      questions to figure out a mystery word or name. Kasoti uses AI to answer the questions. We
-      hope you have as much fun playing it as we did creating it!
+      Kasoti is a fun and interactive guessing game that challenges your skills. Players can either
+      ask questions to figure out a mystery name with AI providing the answers or switch to player
+      mode, where you select a name and the AI tries to guess it by asking AI-generated questions.
+      We hope you have as much fun playing it as we did creating it!
     </p>
   </div>
 </template>

@@ -81,6 +81,7 @@ const submitInput = async () => {
       return
     }
 
+    isLoading.value = true // Start loading
     store.startGame()
 
     try {
