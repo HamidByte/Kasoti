@@ -61,7 +61,12 @@ const submitInput = async () => {
       store.addQuestion(question.trim())
     } else {
       const previousQA = questions.value
-        .map((q, i) => `Q${i + 1}: ${q}\nAnswer: ${userInput.value.trim()}`)
+        .map((q, i) => {
+          // Use userInput for the most recent answer and answers[i] for the previous ones
+          const answer =
+            i === questions.value.length - 1 ? userInput.value.trim() : (answers.value[i] ?? '')
+          return `Q${i + 1}: ${q}\nAnswer: ${answer}`
+        })
         .join('\n\n')
 
       const playerPrompt = `${DEFINITIONS.PLAYER_PROMPT}\n\n${previousQA}\n\nQ${questions.value.length + 1}:`
