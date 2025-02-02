@@ -1,6 +1,6 @@
 # Kasoti Game
 
-Kasoti is a guessing game powered by AI, built with Vue.js. Players ask Yes or No questions to narrow down possibilities and guess a predefined word/name. An intelligent system enhances the gameplay by providing precise answers. Test your knowledge and see if you can outsmart the game!
+Kasoti is a guessing game powered by AI, built with Vue.js. Players can switch between two modes: in AI Mode, players ask Yes or No questions, and the AI provides answers to narrow down possibilities and guess a predefined name. In Player Mode, the roles reverse, and the AI asks players questions to guess the name. An intelligent system enhances the gameplay by providing precise answers or generating questions. Test your knowledge and see if you can outsmart the game!
 
 ## Setup
 
