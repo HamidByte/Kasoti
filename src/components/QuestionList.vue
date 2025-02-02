@@ -2,34 +2,29 @@
   <div class="question-list-container" v-if="hasQuestions">
     <h2 class="text-lg font-bold mb-2 text-center">Questions Asked:</h2>
     <ul class="question-list">
-      <li v-for="(item, index) in questions" :key="index" class="question-item">
+      <li v-for="(question, index) in questions" :key="index" class="question-item">
         <div class="question">
           <span class="question-number">Q{{ index + 1 }}:</span>
-          <span class="question-text">{{ item.question }}</span>
+          <span class="question-text">{{ question }}</span>
         </div>
         <div class="answer">
           <span class="answer-label">Answer:</span>
-          <span class="answer-text">{{ item.answer }}</span>
+          <span class="answer-text">{{ answers[index] }}</span>
         </div>
       </li>
     </ul>
   </div>
 </template>
 
-<script>
+<script setup>
 import { computed } from 'vue'
 import { useKasotiStore } from '@/stores/kasotiStore'
 
-export default {
-  setup() {
-    const store = useKasotiStore()
-    const questions = store.questions
+const store = useKasotiStore()
 
-    const hasQuestions = computed(() => questions.length > 0)
-
-    return { questions, hasQuestions }
-  },
-}
+const questions = computed(() => store.questions)
+const answers = computed(() => store.answers)
+const hasQuestions = computed(() => questions.value.length > 0)
 </script>
 
 <style scoped>

@@ -1,18 +1,12 @@
-<script>
-import { computed } from 'vue'
+<script setup>
+import { ref, computed } from 'vue'
 import { useKasotiStore } from '@/stores/kasotiStore'
 import QuestionInput from '@/components/QuestionInput.vue'
 import QuestionList from '@/components/QuestionList.vue'
 import Results from '@/components/Results.vue'
 
-export default {
-  components: { QuestionInput, QuestionList, Results },
-  setup() {
-    const store = useKasotiStore()
-    const gameOver = computed(() => store.gameOver)
-    return { gameOver }
-  },
-}
+const store = useKasotiStore()
+const gameOver = computed(() => store.gameOver)
 </script>
 
 <template>

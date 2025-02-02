@@ -3,7 +3,7 @@
     <input
       v-model="userInput"
       @keydown.enter="submitInput"
-      placeholder="Type your question..."
+      :placeholder="isPlayerMode ? `Type your answer...` : `Type your question...`"
       class="w-full p-2 border rounded"
     />
     <button @click="submitInput" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">
@@ -13,52 +13,105 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref, computed } from 'vue'
 import { useKasotiStore } from '@/stores/kasotiStore'
-import { sendQuestionApi } from '@/services/apiService'
-import { verifyAnswer } from '@/utils/verifyAnswer'
+import { sendPromptApi } from '@/services/apiService'
 import * as DEFINITIONS from '@/utils/constants.js'
+import { verifyAnswer } from '@/utils/verifyAnswer'
+import { eventBus } from '@/eventBus'
 
-export default {
-  setup() {
-    const userInput = ref('')
-    const store = useKasotiStore()
-    const selectedCelebrity = computed(() => store.selectedCelebrity)
-    const isLoading = ref(false)
+const store = useKasotiStore()
 
-    const submitInput = async () => {
-      if (!userInput.value.trim()) return
-      isLoading.value = true // Start loading
+const userInput = ref('')
+const isLoading = ref(false)
+const startClicked = ref(false)
+const isPlayerMode = computed(() => store.isPlayerMode)
+const gameStarted = computed(() => store.gameStarted)
+const selectedCelebrity = computed(() => store.selectedCelebrity)
+const questions = computed(() => store.questions)
+const answers = computed(() => store.answers)
 
-      try {
-        // Verify the answer using custom logic
-        store.checkQuestion(userInput.value.trim())
+const submitInput = async () => {
+  if (!userInput.value.trim() && startClicked.value) {
+    return
+  }
 
-        // Retrieve the general answers
-        const aiPrompt = DEFINITIONS.AI_PROMPT.replace('{celebrity}', selectedCelebrity.value)
-        const response = await sendQuestionApi(`${aiPrompt}\n${userInput.value}`)
-        const answer =
-          response?.candidates[0]?.content?.parts[0]?.text ?? DEFINITIONS.DEFAULT_ERROR_MESSAGE
+  isLoading.value = true // Start loading
 
-        // Verify the answer using the API
-        store.checkAnswer(answer.trim())
-
-        store.addQuestion({ question: userInput.value, answer: answer.trim() })
-      } catch (error) {
-        console.error('Submission failed:', error) // Log the error for debugging
-        store.addQuestion({
-          question: userInput.value,
-          answer: DEFINITIONS.GENERIC_ERROR_MESSAGE,
-        })
-      }
-
-      isLoading.value = false // Stop loading in all cases
-      userInput.value = '' // Clear input
+  if (isPlayerMode.value && gameStarted.value) {
+    if (
+      startClicked.value &&
+      userInput.value.trim().toLowerCase() !== 'yes' &&
+      userInput.value.trim().toLowerCase() !== 'no'
+    ) {
+      alert('Please answer with "Yes" or "No" only.')
+      return
     }
 
-    return { userInput, isLoading, submitInput }
-  },
+    // First time when the game starts, send the initial prompt
+    if (!startClicked.value) {
+      startClicked.value = true
+
+      // Send the initial prompt to get the first question
+      const response = await sendPromptApi(DEFINITIONS.PLAYER_PROMPT)
+      const question =
+        response?.candidates[0]?.content?.parts[0]?.text ?? DEFINITIONS.DEFAULT_ERROR_MESSAGE
+
+      store.addQuestion(question.trim())
+    } else {
+      const previousQA = questions.value
+        .map((q, i) => `Q${i + 1}: ${q}\nAnswer: ${userInput.value.trim()}`)
+        .join('\n\n')
+
+      const playerPrompt = `${DEFINITIONS.PLAYER_PROMPT}\n\n${previousQA}\n\nQ${questions.value.length + 1}:`
+
+      // Send the updated prompt to the API to get the next question
+      const response = await sendPromptApi(playerPrompt)
+      const question =
+        response?.candidates[0]?.content?.parts[0]?.text ?? DEFINITIONS.DEFAULT_ERROR_MESSAGE
+
+      store.addQuestion(question.trim())
+      store.addAnswer(userInput.value.trim())
+    }
+  }
+
+  if (!isPlayerMode.value) {
+    if (!userInput.value.trim()) {
+      return
+    }
+
+    store.startGame()
+
+    try {
+      // Verify the answer using custom logic
+      store.checkQuestion(userInput.value.trim())
+
+      // Retrieve the general answers
+      const aiPrompt = DEFINITIONS.AI_PROMPT.replace('{celebrity}', selectedCelebrity.value)
+      const response = await sendPromptApi(`${aiPrompt}\n${userInput.value}`)
+      const answer =
+        response?.candidates[0]?.content?.parts[0]?.text ?? DEFINITIONS.DEFAULT_ERROR_MESSAGE
+
+      // Verify the answer using the API
+      store.checkAnswer(answer.trim())
+
+      store.addQuestion(userInput.value.trim())
+      store.addAnswer(answer.trim())
+    } catch (error) {
+      console.error('Submission failed:', error) // Log the error for debugging
+      store.addQuestion(userInput.value.trim())
+      store.addAnswer(DEFINITIONS.GENERIC_ERROR_MESSAGE)
+    }
+  }
+
+  isLoading.value = false // Stop loading in all cases
+  userInput.value = '' // Clear input
+}
+
+// Assign the function to be triggered globally
+eventBus.triggerSubmitInput = () => {
+  submitInput()
 }
 </script>
 

@@ -1,15 +1,17 @@
 <script setup>
+import { ref, computed } from 'vue'
 import { useKasotiStore } from '@/stores/kasotiStore'
-import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import IconMoon from '@/components/icons/IconMoon.vue'
 import IconSun from '@/components/icons/IconSun.vue'
 import { REGIONS } from '@/utils/constants'
+import { eventBus } from '@/eventBus'
 
 const route = useRoute()
 const store = useKasotiStore()
 
 const darkMode = ref(false)
+const isModeToggled = ref(false)
 const selectedRegion = ref(REGIONS[0].value) // Default region
 const timeTaken = computed(() => store.getTimeTaken)
 const questionsLeft = computed(() => store.questionsLeft)
@@ -21,7 +23,17 @@ function toggleTheme() {
   document.documentElement.setAttribute('data-theme', darkMode.value ? 'dark' : 'light')
 }
 
-function updateCelebrity() {
+const toggleMode = (state) => {
+  isModeToggled.value = state
+  store.setToggleMode(state)
+}
+
+const playerModeStart = () => {
+  store.startGame()
+  eventBus.triggerSubmitInput()
+}
+
+const updateCelebrity = () => {
   store.setRegion(selectedRegion.value)
 }
 </script>
@@ -48,8 +60,35 @@ function updateCelebrity() {
         </div>
 
         <div class="menu-center">
+          <!-- Toggle Mode -->
+          <div class="toggle-mode-container">
+            <button
+              :class="{ active: isModeToggled }"
+              class="toggle-mode-btn"
+              :disabled="gameStarted"
+              @click="toggleMode(true)"
+            >
+              Player Mode
+            </button>
+            <button
+              :class="{ active: !isModeToggled }"
+              class="toggle-mode-btn"
+              :disabled="gameStarted"
+              @click="toggleMode(false)"
+            >
+              AI Mode
+            </button>
+          </div>
+          <div v-if="isModeToggled">
+            <button v-if="!gameStarted" class="start-btn" @click="playerModeStart">Start</button>
+          </div>
           <!-- Dropdown for Region Selection -->
-          <select v-model="selectedRegion" :disabled="gameStarted" @change="updateCelebrity">
+          <select
+            v-else
+            v-model="selectedRegion"
+            :disabled="gameStarted || isModeToggled"
+            @change="updateCelebrity"
+          >
             <option v-for="region in REGIONS" :key="region.value" :value="region.value">
               {{ region.display }}
             </option>
@@ -205,6 +244,78 @@ select:hover {
 select:focus {
   outline: none;
   box-shadow: 0 0 5px var(--color-primary);
+}
+
+.toggle-mode-container {
+  display: flex;
+  gap: 0;
+}
+
+.toggle-mode-btn {
+  padding: 10px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: 2px solid var(--color-primary);
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Apply round corners only to outer edges */
+.toggle-mode-btn:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-right: none; /* Remove double border */
+}
+.toggle-mode-btn:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-left: none; /* Remove double border */
+}
+
+.toggle-mode-btn:hover {
+  border-color: var(--color-primary-hover);
+}
+
+.toggle-mode-btn:focus {
+  outline: none;
+  box-shadow: 0 0 5px var(--color-primary);
+}
+
+.toggle-mode-btn.active {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+}
+
+.toggle-mode-btn:not(.active) {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+}
+
+.start-btn {
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--color-surface);
+  background-color: var(--color-primary);
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.start-btn:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-3px);
+}
+
+.start-btn:active {
+  transform: translateY(1px);
 }
 
 .game-status {

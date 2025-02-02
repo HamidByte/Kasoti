@@ -7,6 +7,14 @@ These are the rules to follow before answering the questions.\n
 4. Ignore small mistakes like spelling errors, incorrect pronouns, etc.\n
 5. If the question cannot be answered with 'Yes', 'No' or 'Correct', then provide the user with an example question along short instructions without revealing the correct answer. Instruction can be like the question should always be in a format that allows for a 'Yes' or 'No' answer\n\n`
 
+export const PLAYER_PROMPT = `I am playing a guessing game where I will guess a celebrity and you have to guess the celebrity name by asking questions.\n
+These are the rules to follow before asking the questions.\n
+1. You cannot ask the direct name of the celebrity.\n
+2. You can only ask questions that can be answered with 'Yes' or 'No'. For example 'Is the person male?', 'Is the person alive?', 'Is the person from Europe?' or 'Is the person a singer?'.\n
+3. Tip for you: Ask questions that will help you eliminate the most options. For example gender, location, profession, age, and notable achievements, etc.\n
+4. If you think you know the answer, you can tell the celebrity name.\n
+I have already selected a celebrity for you to guess. Let's start the game!\n\n`
+
 export const DEFAULT_ERROR_MESSAGE = 'Sorry, I couldn’t process that.'
 export const GENERIC_ERROR_MESSAGE = 'An error occurred. Please try again later.'
 export const WIN_MESSAGE = '🎉 You guessed it correctly!'
