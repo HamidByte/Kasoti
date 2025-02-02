@@ -1,12 +1,12 @@
 <template>
   <div class="question-form-wrapper mb-4">
     <input
-      v-model="userQuestion"
-      @keydown.enter="submitQuestion"
+      v-model="userInput"
+      @keydown.enter="submitInput"
       placeholder="Type your question..."
       class="w-full p-2 border rounded"
     />
-    <button @click="submitQuestion" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">
+    <button @click="submitInput" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">
       <span v-if="isLoading">Submitting...</span>
       <span v-else>Submit</span>
     </button>
@@ -14,8 +14,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useKasotiStore } from '@/stores/kasotiStore'
 import { sendQuestionApi } from '@/services/apiService'
 import { verifyAnswer } from '@/utils/verifyAnswer'
@@ -23,60 +22,42 @@ import * as DEFINITIONS from '@/utils/constants.js'
 
 export default {
   setup() {
-    const userQuestion = ref('')
+    const userInput = ref('')
     const store = useKasotiStore()
     const selectedCelebrity = computed(() => store.selectedCelebrity)
     const isLoading = ref(false)
 
-    const submitQuestion = async () => {
-      if (!userQuestion.value.trim()) return
-
+    const submitInput = async () => {
+      if (!userInput.value.trim()) return
       isLoading.value = true // Start loading
 
       try {
-        // Final guess
-        // if (store.questionsLeft === 1) {
-        //   const isCorrectGuess = store.verifyAnswer(userQuestion.value.trim())
-
-        //   store.addQuestion({
-        //     question: userQuestion.value,
-        //     answer: isCorrectGuess
-        //       ? DEFINITIONS.CORRECT_GUESS_MESSAGE
-        //       : DEFINITIONS.INCORRECT_GUESS_MESSAGE,
-        //   })
-        //   userQuestion.value = '' // Clear input
-        //   return
-        // }
-
         // Verify the answer using custom logic
-        store.checkQuestion(userQuestion.value.trim())
+        store.checkQuestion(userInput.value.trim())
 
         // Retrieve the general answers
-        const questionPrompt = DEFINITIONS.QUESTION_PROMPT.replace(
-          '{celebrity}',
-          selectedCelebrity.value,
-        )
-        const response = await sendQuestionApi(`${questionPrompt}\n${userQuestion.value}`)
+        const aiPrompt = DEFINITIONS.AI_PROMPT.replace('{celebrity}', selectedCelebrity.value)
+        const response = await sendQuestionApi(`${aiPrompt}\n${userInput.value}`)
         const answer =
           response?.candidates[0]?.content?.parts[0]?.text ?? DEFINITIONS.DEFAULT_ERROR_MESSAGE
 
         // Verify the answer using the API
         store.checkAnswer(answer.trim())
 
-        store.addQuestion({ question: userQuestion.value, answer: answer.trim() })
+        store.addQuestion({ question: userInput.value, answer: answer.trim() })
       } catch (error) {
         console.error('Submission failed:', error) // Log the error for debugging
         store.addQuestion({
-          question: userQuestion.value,
+          question: userInput.value,
           answer: DEFINITIONS.GENERIC_ERROR_MESSAGE,
         })
-      } finally {
-        isLoading.value = false // Stop loading in all cases
-        userQuestion.value = '' // Clear input
       }
+
+      isLoading.value = false // Stop loading in all cases
+      userInput.value = '' // Clear input
     }
 
-    return { userQuestion, submitQuestion, isLoading }
+    return { userInput, isLoading, submitInput }
   },
 }
 </script>

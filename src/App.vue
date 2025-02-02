@@ -10,9 +10,9 @@ const route = useRoute()
 const store = useKasotiStore()
 
 const darkMode = ref(false)
-const questionsLeft = computed(() => store.questionsLeft)
-const timeTaken = computed(() => store.getTimeTaken)
 const selectedRegion = ref(REGIONS[0].value) // Default region
+const timeTaken = computed(() => store.getTimeTaken)
+const questionsLeft = computed(() => store.questionsLeft)
 const gameStarted = computed(() => store.gameStarted)
 const gameOver = computed(() => store.gameOver)
 
@@ -37,7 +37,7 @@ function updateCelebrity() {
         <div class="menu-left">
           <RouterLink to="/" class="menu-btn">Home</RouterLink>
           <!-- Theme Toggle Button -->
-          <button class="toggle-btn" title="Toggle theme" @click="toggleTheme">
+          <button class="toggle-theme-btn" title="Toggle theme" @click="toggleTheme">
             <template v-if="darkMode">
               <IconSun :color="'var(--color-text-primary)'" />
             </template>
@@ -49,7 +49,7 @@ function updateCelebrity() {
 
         <div class="menu-center">
           <!-- Dropdown for Region Selection -->
-          <select v-model="selectedRegion" @change="updateCelebrity" :disabled="gameStarted">
+          <select v-model="selectedRegion" :disabled="gameStarted" @change="updateCelebrity">
             <option v-for="region in REGIONS" :key="region.value" :value="region.value">
               {{ region.display }}
             </option>
@@ -107,7 +107,7 @@ header {
   color: #dff1ff;
 }
 
-.toggle-btn {
+.toggle-theme-btn {
   width: 36px;
   height: 36px;
   padding: 0;
@@ -120,11 +120,11 @@ header {
   transition: transform 0.3s ease;
 }
 
-.toggle-btn:hover {
+.toggle-theme-btn:hover {
   transform: translateY(-3px);
 }
 
-.toggle-btn:active {
+.toggle-theme-btn:active {
   transform: translateY(1px);
 }
 
@@ -139,21 +139,24 @@ header {
 
 .menu-left {
   display: flex;
-  flex: 1; /* Pushes to the left */
+  /* Pushes to the left */
+  /* flex: 1; */
   justify-content: left;
   gap: 20px; /* Space between buttons */
 }
 
 .menu-center {
   display: flex;
-  flex: 1; /* Centers the menu items */
+  /* Centers the menu items */
+  /* flex: 1; */
   justify-content: center;
   gap: 20px; /* Space between buttons */
 }
 
 .menu-right {
   display: flex;
-  flex: 1; /* Pushes to the right */
+  /* Pushes to the right */
+  /* flex: 1; */
   justify-content: right;
   gap: 20px; /* Space between buttons */
 }
