@@ -2,14 +2,19 @@
   <div class="question-list-container" v-if="hasQuestions">
     <h2 class="text-lg font-bold mb-2 text-center">Questions Asked:</h2>
     <ul class="question-list">
-      <li v-for="(question, index) in questions" :key="index" class="question-item">
+      <!-- Reversed question order for latest entries to appear at the top -->
+      <li
+        v-for="(question, index) in [...questions].reverse()"
+        :key="questions.length - index - 1"
+        class="question-item"
+      >
         <div class="question">
-          <span class="question-number">Q{{ index + 1 }}:</span>
+          <span class="question-number">Q{{ questions.length - index }}:</span>
           <span class="question-text">{{ question }}</span>
         </div>
         <div class="answer">
           <span class="answer-label">Answer:</span>
-          <span class="answer-text">{{ answers[index] }}</span>
+          <span class="answer-text">{{ [...answers].reverse()[index - 1] }}</span>
         </div>
       </li>
     </ul>

@@ -37,8 +37,6 @@ const submitInput = async () => {
     return
   }
 
-  isLoading.value = true // Start loading
-
   if (isPlayerMode.value && gameStarted.value) {
     if (
       startClicked.value &&
@@ -48,6 +46,8 @@ const submitInput = async () => {
       alert('Please answer with "Yes" or "No" only.')
       return
     }
+
+    isLoading.value = true // Start loading
 
     // First time when the game starts, send the initial prompt
     if (!startClicked.value) {
