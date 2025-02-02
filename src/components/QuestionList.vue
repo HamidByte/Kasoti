@@ -14,7 +14,9 @@
         </div>
         <div class="answer">
           <span class="answer-label">Answer:</span>
-          <span class="answer-text">{{ [...answers].reverse()[index - 1] }}</span>
+          <span class="answer-text">
+            {{ isPlayerMode ? [...answers].reverse()[index - 1] : [...answers].reverse()[index] }}
+          </span>
         </div>
       </li>
     </ul>
@@ -27,6 +29,7 @@ import { useKasotiStore } from '@/stores/kasotiStore'
 
 const store = useKasotiStore()
 
+const isPlayerMode = computed(() => store.isPlayerMode)
 const questions = computed(() => store.questions)
 const answers = computed(() => store.answers)
 const hasQuestions = computed(() => questions.value.length > 0)
